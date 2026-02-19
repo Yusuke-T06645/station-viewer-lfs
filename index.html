@@ -5,25 +5,27 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Station 3D Model</title>
 
-  <!-- model-viewer（公式CDN） -->
+  <!-- model-viewer（Google公式CDN） -->
   <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.3.0/model-viewer.min.js"></script>
 
   <style>
-    html,body { height:100%; margin:0; background:#000; }
-    model-viewer {
-      width:100%;
-      height:100%;
-      display:block;
+    html, body {
+      margin: 0;
+      height: 100%;
+      background-color: #000;
     }
-    /* 簡単な読み込み中表示 */
+    model-viewer {
+      width: 100%;
+      height: 100%;
+      background-color: #000;
+    }
     #loader {
       position: absolute;
-      left: 50%;
       top: 50%;
-      transform: translate(-50%,-50%);
-      color: #ddd;
-      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-      pointer-events: none;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #ccc;
+      font-family: sans-serif;
     }
   </style>
 </head>
@@ -32,36 +34,32 @@
 
   <model-viewer
     id="viewer"
-    src="./station_low_draco.glb"
+    src="station_low_draco.glb"
     alt="Station 3D model"
     camera-controls
     auto-rotate
-    exposure="1.3"
-    shadow-intensity="1"
+    autoplay
     environment-image="neutral"
-    loading="eager"
-    reveal="auto"
+    exposure="1.2"
+    shadow-intensity="1"
     style="background-color:#000;">
   </model-viewer>
 
   <script>
-    // ローダーを消す簡易スクリプト
     const viewer = document.getElementById('viewer');
     const loader = document.getElementById('loader');
 
+    // モデルが読み込まれたらローダーを消す
     viewer.addEventListener('load', () => {
       loader.style.display = 'none';
+      console.log('Model loaded successfully.');
     });
 
-    // 読み込みエラー時のログ（開発者ツールで確認）
-    viewer.addEventListener('error', (ev) => {
-      console.error('model-viewer error:', ev);
-      loader.textContent = 'Failed to load model. Open DevTools -> Console for details.';
+    // エラー発生時に内容を表示
+    viewer.addEventListener('error', (e) => {
+      loader.textContent = '❌ モデルの読み込みに失敗しました。';
+      console.error('model-viewer error:', e);
     });
-
-    // もしモデルが小さすぎ/大きすぎ に見える場合はここでカメラを調整できます：
-    // viewer.cameraOrbit = "0deg 90deg 20m";
-    // viewer.fieldOfView = "45deg";
   </script>
 </body>
 </html>
